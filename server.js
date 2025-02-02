@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv"; 
 import router from "./routers/userRouter.js";
 import imageRouter from "./routers/image.router.js"
+import commentRouter from "./routers/commentRounter.js"
 
 dotenv.config();
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true})) 
 app.use("/users",router)
 app.use("/image",imageRouter)
+app.use("/comment",commentRouter)
     
 
 

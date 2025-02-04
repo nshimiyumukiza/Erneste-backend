@@ -16,7 +16,7 @@ const createImage = async (req,res)=>{
 const getImage = async (req,res)=>{
   try {
     const image = await Img.find({});
-    res.status(200).json({message:"all images",data:image})
+    res.status(200).json({message:`all ${image.length} images`,data:image})
   } catch (error) {
     res.status(500).json({message:error.message})
   }
@@ -61,4 +61,46 @@ const deleteImage = async (req,res)=>{
         res.status(500).json({message:error.message})
     }
 }
-export {createImage,getImage,getOneImage,updateImage,deleteImage}
+
+const imageLikes = async (req,res)=>{
+    const imageId = req.params.id
+    
+    const image = await Img.findById(imageId)
+    if(!image){
+        return res.status(403).json({message:"Image not found"})
+    }else{
+        const userId = req.user._id
+        if(image.like.includes(userId)){
+            return res.status(401).json({message:"user already liked"})
+        }else{
+            if(image.dislike.includes(userId)){
+                image.dislike.pull(userId)
+            }else{
+                image.like.push(userId)
+                image.save()
+                return res.status(201).json({message:`User called ${req.user.name} have successfuly liked this image`})
+            }
+        }
+    }
+}
+const dislikeImage = async (req,res)=>{
+    const imageId = req.params.id
+    const image = await Img.findById(imageId)
+    if(!image){
+        return res.status(403).json({message:"Image not found"})
+    }else{
+        const userId = req.user._id
+        if(image.dislike.includes(userId)){
+            return res.status(401).json({message:"user already disliked"})
+        }else{
+            if(image.like.includes(userId)){
+                image.like.pull(userId)
+            }else{
+                image.dislike.push(userId)
+                image.save()
+                return res.status(201).json({message:`User called ${req.user.name} have disliked on this image`})
+            }
+        }
+    }
+}
+export {createImage,getImage,getOneImage,updateImage,deleteImage,imageLikes,dislikeImage}

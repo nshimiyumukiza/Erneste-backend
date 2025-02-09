@@ -123,4 +123,26 @@ const dislikeImage = async (req, res) => {
         }
     }
 }
-export { createImage, getImage, getOneImage, updateImage, deleteImage, imageLikes, dislikeImage }
+
+const serachImage = async (req,res)=>{
+    const searchImage =req.query.imageTitle
+    if(!searchImage){
+        return res.status(403).json({message:"request not found"})
+    }else{
+        // const result = await Img.find({ title: { $regex: new RegExp(searchImage, "i") } });
+
+        const images = await Img.find()
+        const result = images.filter(flitedImage =>
+            flitedImage.title.toUpperCase().includes(searchImage.toUpperCase())
+          );
+          
+        
+        if(!result){
+            return res.status(403).json({message:"No image found on this search params"})
+        }else{
+            return res.status(200).json({message:"Successfuly",result})
+        }
+    }
+
+}
+export { createImage, getImage, getOneImage, updateImage, deleteImage, imageLikes, dislikeImage,serachImage }

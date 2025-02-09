@@ -1,5 +1,5 @@
 import express from "express"
-import { createImage, deleteImage, dislikeImage, getImage, getOneImage, imageLikes, updateImage } from "../controllers/image.controller.js"
+import { createImage, deleteImage, dislikeImage, getImage, getOneImage, imageLikes, serachImage,updateImage } from "../controllers/image.controller.js"
 import VelifyAccess from "../midleware/velify.js"
 import upload from "../midleware/multer.js"
 
@@ -12,5 +12,6 @@ router.put("/:id",updateImage)
 router.delete("/:id",deleteImage)
 router.put("/like/:id",VelifyAccess("user"),imageLikes)
 router.put("/dislike/:id",VelifyAccess("user"),dislikeImage)
+router.get("/images/search",serachImage)
 
 export default router

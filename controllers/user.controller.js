@@ -1,11 +1,17 @@
 import jwt from "jsonwebtoken"
 import User from "../models/user.model.js";
+import sendEmailToUser from "../utlies/email-notification.js";
 
 // post user
 
 const createUser = async(req,res,next)=>{
   try {
+    
     const user = await User.create(req.body)
+    const users = await User.find()
+    users.map(userr =>{
+      sendEmailToUser(userr)
+    })
     res.status(201).json({message:"user created successfuly !!!",data:user})
   } catch (error) {
     res.status(403).json({message:error.message})

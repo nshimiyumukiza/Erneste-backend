@@ -5,7 +5,7 @@ import VelifyAccess from "../midleware/velify.js"
 
 const router = express.Router()
 router.post("/",userAccountRule(),validationRule,createUser)
-router.get("/",VelifyAccess("user"),getUser)
+router.get("/",getUser)
 router.get("/:id",getSingleUsere)
 router.put("/:id",updateUser)
 router.delete("/:id",deleteUser)

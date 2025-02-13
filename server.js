@@ -6,13 +6,17 @@ import router from "./routers/userRouter.js";
 import imageRouter from "./routers/image.router.js";
 import commentRouter from "./routers/commentRounter.js";
 import swaggerUi from "swagger-ui-express";
-import swaggerOutput from "./documentation/swagger_output.json" assert { type: "json" };
+import fs from "fs";
+import path from "path";
 
 // Load environment variables
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 const db = process.env.DB;
+
+// Read the swagger_output.json file
+const swaggerOutput = JSON.parse(fs.readFileSync(path.resolve("documentation/swagger_output.json"), "utf8"));
 
 // Middleware
 app.use(express.json());

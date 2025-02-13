@@ -70,7 +70,7 @@ const updateImage = async (req, res) => {
 const deleteImage = async (req, res) => {
     try {
         const { id } = req.params;
-        const image = await Img.findByIdAndUpdate(id)
+        const image = await Img.findByIdAndDelete(id)
         res.status(200).json({ message: "image deleted successufilly" })
     } catch (error) {
         res.status(500).json({ message: error.message })

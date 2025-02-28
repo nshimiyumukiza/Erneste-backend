@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer"
 
 
-const sendEmailToUser = (userInf)=>{
+const sendEmailToUser = (userInf,subject,html)=>{
 
     let transiport = nodemailer.createTransport({
         host:"smtp.gmail.com",
@@ -12,12 +12,12 @@ const sendEmailToUser = (userInf)=>{
             pass:process.env.PASS,
         }
     })
-
+        
     let mainOptions = {
         from:process.env.Email,
         to:userInf.email,
-        subject:'Added user',
-        html:`<p>You have new user created on your platform</p>`
+        subject:subject,
+        html:html
     }
 
     transiport.sendMail(mainOptions,function(err,info){

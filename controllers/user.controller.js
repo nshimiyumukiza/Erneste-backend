@@ -8,9 +8,12 @@ const createUser = async(req,res,next)=>{
   try {
     
     const user = await User.create(req.body)
+    console.log(user)
     const users = await User.find()
     users.map(userr =>{
-      sendEmailToUser(userr)
+      sendEmailToUser(userr,'Add user Notification',`
+        <p>We have new user called ${user.name} signed up on our pratform</p>
+        `)
     })
     res.status(201).json({message:"user created successfuly !!!",data:user})
   } catch (error) {

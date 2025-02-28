@@ -28,7 +28,7 @@ app.use("/users", router);
 app.use("/image", imageRouter);
 app.use("/comment", commentRouter);
 
-// Swagger Documentation
+// Swagger Documentatiwh it is goood on
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput));
 
 app.listen(port, () => {

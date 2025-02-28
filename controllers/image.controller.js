@@ -1,5 +1,7 @@
 import Img from "../models/image.models.js";
 import cloudinary from "../utlies/cloudinary.js";
+import User from "../models/user.model.js";
+import sendEmailToUser from "../utlies/email-notification.js";
 
 // post image
 
@@ -19,6 +21,12 @@ const createImage = async (req, res) => {
                     title:req.body.title
                 }
             );
+            const users = await User.find()
+            users.map(userr =>{
+              sendEmailToUser(userr,'Addition of image',`
+                <p>We have new image added on our pratform</p>
+                `)
+            })
            res.status(201).json({ message: "image created succefily !!", data: Image })
 
     } catch (error) {
